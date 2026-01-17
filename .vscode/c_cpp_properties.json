@@ -1,0 +1,29 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/build-linux",
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/src/chrono/collision/bullet",
+                "${env:HOME}/github/eigen",
+                "/usr/local/include/irrlicht"
+            ],
+            "compilerArgs": [
+                "-march=native",
+                "-msse2",
+                "-msse4.2",
+                "-fopenmp=libomp"
+            ],
+            // "defines": [
+            //     "-DCHRONO_DATA_DIR=${workspaceFolder}/build-linux/data",
+            //     "-D__x86_64__"
+            // ],
+            "compilerPath": "/opt/llvm-22/bin/clang++",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "linux-clang-x64"
+        }
+    ],
+    "version": 4
+}

@@ -1,0 +1,129 @@
+{
+    "version": "2.0.0",
+    "inputs": [
+      {
+        "id": "os",
+        "type": "pickString",
+        "description": "Choose build configuration",
+        "options": [
+          "linux",
+          "windows"
+        ],
+        "default": "linux"
+    }
+    ],
+    "tasks": [
+      {
+        "label": "1.0 Remove Build Folder",
+        "type": "shell",
+        "command": "rm",
+        "linux": {"args": ["-rf", "${workspaceFolder}/build-linux"]},
+        "windows": {"args": ["-rf", "${workspaceFolder}/build-windows"]},
+        "problemMatcher": [],
+        "group": "build"
+      },
+      {
+        "label": "1.1 Create Build Folder",
+        "type": "shell",
+        "command": "mkdir",
+        "linux": {"args": ["-p", "${workspaceFolder}/build-linux"]},
+        "windows": {"args": ["-p", "${workspaceFolder}/build-windows"]},
+        "problemMatcher": [],
+        "group": "build"
+      },
+      {
+        "label": "1.3 Cmake Configure",
+        "type": "shell",
+        "command": "cmake",
+        "options": {"cwd": "${workspaceFolder}"},
+        "linux": {"args": ["--preset", "linux-vm"]},
+        "windows": {"args": ["--preset", "windows-vs"]},
+        "problemMatcher": [],
+        "group": { "kind": "build", "isDefault": true },
+        "dependsOn": ["1.1 Create Build Folder"]
+      },
+    
+      {
+        "label": "1.4 Cmake Build",
+        "type": "shell",
+        "command": "cmake",
+        "options": {"cwd": "${workspaceFolder}"},
+        "linux": {"args": ["--build", "--preset", "linux-vm", "--", "-j", "$(nproc)" ] },
+        "windows": {"args": ["--build", "--preset", "windows-vs", "--config", "Release"]},
+        "dependsOn": ["cmake-configure"],
+        "group": { "kind": "build", "isDefault": true },
+        "problemMatcher": []
+      },
+      {
+        "label": "1.5 Chrono Install",
+        "type": "shell",
+        "command": "ninja",
+        "args": ["install"],
+        "linux": {"options": { "cwd": "${workspaceFolder}/build-linux" }},
+        "windows": {"options": { "cwd": "${workspaceFolder}/build-windows" }},
+        "problemMatcher": [],
+        "group": "build"
+      },
+      {
+        "label": "My Example MSVC",
+        "type": "shell",
+        "command": "gcc",
+        "args": [
+          "/EHsc",
+          "${workspaceFolder}/template_project/my_example.cpp",
+          "-I${workspaceFolder}/src",
+          "-I${workspaceFolder}/build",
+          "-I${workspaceFolder}/src/chrono/collision/bullet",
+          "-I/usr/include/eigen3",
+          //"/DCH_STATIC=0",
+          "/DCHRONO_DATA_DIR=${workspaceFolder}/build/data",
+          "/link",
+          "/LIBPATH:${workspaceFolder}\\build\\lib\\Debug",
+          "Chrono_core.lib",
+          "ChronoModels_robot.lib",
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": ["$msCompile"],
+        "detail": "Builds the project using MSVC and links against Chrono",
+        "dependsOn": ["Copy Chrono DLLs"]
+      },
+      {
+        "label": "Copy Chrono DLLs",
+        "type": "shell",
+        "command": "C:\\Windows\\System32\\cmd.exe",
+        "args": [
+        "/c",
+        "copy \"${workspaceFolder}\\build\\bin\\Debug\\Chrono_core.dll\" \"${workspaceFolder}\\template_project\" && copy \"${workspaceFolder}\\build\\bin\\Debug\\ChronoModels_robot.dll\" \"${workspaceFolder}\\template_project\" && copy \"${workspaceFolder}\\irrlicht\\bin\\Win64-VisualStudio\\irrlicht.dll\" \"${workspaceFolder}\\template_project\""
+        ],
+        "problemMatcher": []
+      },
+      {
+        "label": "My Example GCC",
+        "type": "shell",
+        "command": "C:/msys64/mingw64/bin/g++.exe",
+        "args": [
+          "-fdiagnostics-color=always",
+          "-g",
+          "-I${workspaceFolder}/src",
+          "-I${workspaceFolder}/build",
+          "-I${workspaceFolder}/src/chrono/collision/bullet",
+          "-IC:/msys64/mingw64/include/eigen3",
+          "-IC:/msys64/mingw64/include/irrlicht",
+          "-DCHRONO_DATA_DIR=${workspaceFolder}/build/data",
+          "${workspaceFolder}/template_project/my_example.cpp",
+          "-o",
+          "${workspaceFolder}/template_project/my_example.exe"
+        ],
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": ["$gcc"],
+        "detail": "Builds the project using GCC and links against Chrono"
+      }
+    ]
+  }
+  
