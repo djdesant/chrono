@@ -1,5 +1,5 @@
 {
-	"version": 1,
+	"version": 2,
 	"vendor": {
 		"projectchrono.org/chrono/9.0.1": {}
 	},
@@ -8,7 +8,50 @@
 		"minor": 19,
 		"patch": 0
 	},
+	
+	"buildPresets": [
+		{
+			"name": "linux-vm",
+			"configurePreset": "linux-vm",
+			"description": "Build using the linux-vm configure preset",
+			"hidden": false
+		}
+	],
+
 	"configurePresets": [
+		{
+			"name": "linux-vm",
+			"displayName": "Linux VM Configuration",
+			"hidden": false,
+			"binaryDir": "${sourceDir}/build-linux",
+			"generator": "Ninja",
+			"cacheVariables": {
+				"CMAKE_BUILD_TYPE": "Release",
+				"CMAKE_C_COMPILER": "/opt/llvm-22/bin/clang",
+        "CMAKE_CXX_COMPILER": "/opt/llvm-22/bin/clang++",
+				"CMAKE_CXX_FLAGS": "-Wno-c2y-extensions -Wno-error=c2y-extensions",
+        "CMAKE_C_FLAGS": "-Wno-c2y-extensions -Wno-error=c2y-extensions",
+        "CMAKE_CXX_STANDARD": "17",
+				"BUILD_TESTING": "ON",
+				"BUILD_BENCHMARKING": "ON",
+				"CH_ENABLE_HDF5": "ON",
+				"CH_ENABLE_MODULE_CSHARP": "OFF",
+				"CH_ENABLE_MODULE_FMI": "OFF",
+				"CH_ENABLE_MODULE_IRRLICHT": "ON",
+				"CH_ENABLE_MODULE_MULTICORE": "ON",
+				"CH_ENABLE_MODULE_PARDISO_MKL": "ON",
+				"CH_ENABLE_MODULE_PARSERS": "ON",
+				"CH_ENABLE_MODULE_POSTPROCESS": "ON",
+				"CH_ENABLE_MODULE_PYTHON": "ON",
+				"CH_ENABLE_MODULE_SENSOR": "OFF",
+				"CH_ENABLE_MODULE_SYNCHRONO": "ON",
+				"CH_ENABLE_MODULE_VEHICLE": "ON",
+				"CH_ENABLE_MODULE_VSG": "OFF",
+				"EIGEN3_INCLUDE_DIR": "$env{HOME}/github/eigen",
+				"THRUST_INCLUDE_DIR": "$env{HOME}/github/thrust",
+				"MKL_DIR": "/opt/intel/oneapi/mkl/latest/lib/cmake/mkl"
+			}
+		},
 		{
 			"name": "genericci-base",
 			"displayName": "General CI Base Configuration",

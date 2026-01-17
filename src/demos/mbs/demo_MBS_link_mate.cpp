@@ -497,8 +497,18 @@ void test_anchorchain() {
             coords(i_body, 2) = sys.GetBodies().at(i_body)->GetPos().z();
         }
         // sort according to the X coordinate (horizontal coordinate)
-        std::sort(coords.rowwise().begin(), coords.rowwise().end(),
+        std::vector<Eigen::VectorXd> rows;
+
+        for (int i = 0; i < coords.rows(); ++i) {
+            rows.push_back(coords.row(i));
+        }
+
+        std::sort(rows.begin(), rows.end(),
                   [](auto const& r1, auto const& r2) { return r1(0) < r2(0); });
+
+        for (int i = 0; i < coords.rows(); ++i) {
+            coords.row(i) = rows[i];
+        }
 
         // The reaction forces and torques of the joints in the equilibrium configuration
         ChMatrixDynamic<> reactions;
@@ -524,8 +534,16 @@ void test_anchorchain() {
             reactions(i_link, 6) = m_out.z();
         }
         // sort according to the X coordinate (horizontal coordinate)
-        std::sort(reactions.rowwise().begin(), reactions.rowwise().end(),
+        for (int i = 0; i < reactions.rows(); ++i) {
+            rows.push_back(reactions.row(i));
+        }
+
+        std::sort(rows.begin(), rows.end(),
                   [](auto const& r1, auto const& r2) { return r1(0) < r2(0); });
+
+        for (int i = 0; i < reactions.rows(); ++i) {
+            reactions.row(i) = rows[i];
+        }
 
         // The horizontal reaction force of the catenary curve
         double T0 = reactions.col(1).cwiseAbs().mean();
@@ -595,8 +613,17 @@ void test_anchorchain() {
                 }
             }
             // sort according to the X coordinate (horizontal coordinate)
-            std::sort(modal_shape_i.rowwise().begin(), modal_shape_i.rowwise().end(),
+            std::vector<Eigen::VectorXd> rows;
+            for (int i = 0; i < modal_shape_i.rows(); ++i) {
+                rows.push_back(modal_shape_i.row(i));
+            }
+
+            std::sort(rows.begin(), rows.end(),
                       [](auto const& r1, auto const& r2) { return r1(1) < r2(1); });
+
+            for (int i = 0; i < modal_shape_i.rows(); ++i) {
+                modal_shape_i.row(i) = rows[i];
+             }
 
             if (create_directory(path(out_dir))) {
                 std::ofstream file_shape(out_dir + "/modal_shape_" + std::to_string(imode) + ".dat");

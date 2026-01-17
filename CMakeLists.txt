@@ -13,6 +13,12 @@ cmake_minimum_required(VERSION 3.18)
 # - install(IMPORTED_RUNTIME_ARTIFACTS) CMake 3.21
 
 #-----------------------------------------------------------------------------
+# Location of CUDA includes, please adjust according to your location !
+# https://github.com/NVIDIA/thrust.git
+#-----------------------------------------------------------------------------
+include_directories("$ENV{HOME}/github/thrust/dependencies/libcudacxx/include")
+
+#-----------------------------------------------------------------------------
 # Prevent in-source builds.
 #-----------------------------------------------------------------------------
 
