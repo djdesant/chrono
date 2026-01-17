@@ -15,6 +15,12 @@
 			"configurePreset": "linux-vm",
 			"description": "Build using the linux-vm configure preset",
 			"hidden": false
+		},
+		{
+			"name": "windows-mingw",
+			"configurePreset": "windows-mingw",
+			"description": "Build using the Windows MinGW configure preset",
+			"hidden": false
 		}
 	],
 
@@ -69,6 +75,55 @@
 				"THRUST_INCLUDE_DIR": "$env{HOME}/github/thrust",
 
 				"MKL_DIR": "/opt/intel/oneapi/mkl/latest/lib/cmake/mkl"
+			}
+		},
+		{
+			"name": "windows-mingw",
+			"displayName": "Windows MinGW Configuration",
+			"hidden": false,
+			"binaryDir": "${sourceDir}/build-windows",
+			"generator": "Ninja",
+		
+			"cacheVariables": {
+		
+				"CMAKE_BUILD_TYPE": "Release",
+		
+				"CMAKE_C_COMPILER": "C:/msys64/mingw64/bin/clang.exe",
+				"CMAKE_CXX_COMPILER": "C:/msys64/mingw64/bin/clang++.exe",
+		
+				"CMAKE_CXX_STANDARD": "17",
+		
+				"CMAKE_INSTALL_PREFIX": "${sourceDir}/chrono-install",
+		
+				"SWIG_EXECUTABLE": "C:/msys64/mingw64/bin/swig.exe",
+		
+				"CMAKE_CXX_FLAGS": "-fopenmp -march=native",
+				"CMAKE_C_FLAGS": "-fopenmp -march=native",
+		
+				"BUILD_TESTING": "ON",
+				"BUILD_BENCHMARKING": "ON",
+		
+				"CH_ENABLE_HDF5": "ON",
+				"CH_ENABLE_MODULE_CSHARP": "OFF",
+				"CH_ENABLE_MODULE_FMI": "OFF",
+				"CH_ENABLE_MODULE_IRRLICHT": "ON",
+				"CH_ENABLE_MODULE_MULTICORE": "ON",
+				"CH_ENABLE_MODULE_PARDISO_MKL": "OFF",
+				"CH_ENABLE_MODULE_PARSERS": "ON",
+				"CH_ENABLE_MODULE_POSTPROCESS": "ON",
+				"CH_ENABLE_MODULE_PYTHON": "ON",
+				"CH_ENABLE_MODULE_SENSOR": "OFF",
+				"CH_ENABLE_MODULE_SYNCHRONO": "ON",
+				"CH_ENABLE_MODULE_VEHICLE": "ON",
+				"CH_ENABLE_MODULE_VSG": "OFF",
+		
+				"IRRLICHT_LIBRARY": "C:/msys64/mingw64/lib/libIrrlicht.a",
+				"IRRLICHT_INCLUDE_DIR": "C:/msys64/mingw64/include/irrlicht",
+		
+				"EIGEN3_INCLUDE_DIR": "C:/msys64/mingw64/include/eigen3",
+				"THRUST_INCLUDE_DIR": "C:/msys64/mingw64/include/thrust",
+		
+				"Python3_EXECUTABLE": "C:/msys64/mingw64/bin/python.exe"
 			}
 		},
 		{
