@@ -18,7 +18,7 @@
 # The typical build directory
 /build*
 /compile_commands.json
-CMakeUserPresets.json
+/*install
 
 ##---------------------------------------------------
 ## C++

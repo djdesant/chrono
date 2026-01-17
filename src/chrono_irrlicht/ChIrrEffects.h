@@ -48,9 +48,9 @@ class DepthShaderCB : public irr::video::IShaderConstantSetCallBack {
         worldViewProj *= driver->getTransform(irr::video::ETS_VIEW);
         worldViewProj *= driver->getTransform(irr::video::ETS_WORLD);
 
-        services->setVertexShaderConstant("mWorldViewProj", worldViewProj.pointer(), 16);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("mWorldViewProj"), worldViewProj.pointer(), 16);
 
-        services->setVertexShaderConstant("MaxD", &FarLink, 1);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("MaxD"), &FarLink, 1);
     }
 
     EffectHandler* effect;
@@ -71,24 +71,24 @@ class ShadowShaderCB : public irr::video::IShaderConstantSetCallBack {
         irr::core::matrix4 worldViewProj = driver->getTransform(irr::video::ETS_PROJECTION);
         worldViewProj *= driver->getTransform(irr::video::ETS_VIEW);
         worldViewProj *= driver->getTransform(irr::video::ETS_WORLD);
-        services->setVertexShaderConstant("mWorldViewProj", worldViewProj.pointer(), 16);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("mWorldViewProj"), worldViewProj.pointer(), 16);
 
         worldViewProj = ProjLink;
         worldViewProj *= ViewLink;
         worldViewProj *= driver->getTransform(irr::video::ETS_WORLD);
-        services->setVertexShaderConstant("mWorldViewProj2", worldViewProj.pointer(), 16);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("mWorldViewProj2"), worldViewProj.pointer(), 16);
 
         driver->getTransform(irr::video::ETS_WORLD).getInverse(invWorld);
         irr::core::vector3df lightPosOS = LightLink;
         invWorld.transformVect(lightPosOS);
-        services->setVertexShaderConstant("LightPos", reinterpret_cast<irr::f32*>(&lightPosOS.X), 4);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("LightPos"), reinterpret_cast<irr::f32*>(&lightPosOS.X), 4);
 
-        services->setVertexShaderConstant("MaxD", reinterpret_cast<irr::f32*>(&FarLink), 1);
-        services->setVertexShaderConstant("MAPRES", &MapRes, 1);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("MaxD"), reinterpret_cast<irr::f32*>(&FarLink), 1);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("MAPRES"), &MapRes, 1);
 
-        services->setPixelShaderConstant("LightColour", reinterpret_cast<irr::f32*>(&LightColour.r), 4);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("LightColour"), reinterpret_cast<irr::f32*>(&LightColour.r), 4);
         float fclipborder = clipborder;
-        services->setPixelShaderConstant("ClipBorder", reinterpret_cast<irr::f32*>(&fclipborder), 1);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("ClipBorder"), reinterpret_cast<irr::f32*>(&fclipborder), 1);
     }
 
     EffectHandler* effect;
@@ -1911,24 +1911,24 @@ inline void ScreenQuadCB::OnSetConstants(irr::video::IMaterialRendererServices* 
         */
         /// Version for Irrlicht 1.7.3
         irr::u32 TexVar = 0;
-        services->setPixelShaderConstant("ColorMapSampler", (irr::f32*)(&TexVar), 1);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("ColorMapSampler"), (irr::f32*)(&TexVar), 1);
 
         TexVar = 1;
-        services->setPixelShaderConstant("ScreenMapSampler", (irr::f32*)(&TexVar), 1);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("ScreenMapSampler"), (irr::f32*)(&TexVar), 1);
 
         TexVar = 2;
-        services->setPixelShaderConstant("DepthMapSampler", (irr::f32*)(&TexVar), 1);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("DepthMapSampler"), (irr::f32*)(&TexVar), 1);
 
         TexVar = 3;
-        services->setPixelShaderConstant("UserMapSampler", (irr::f32*)(&TexVar), 1);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("UserMapSampler"), (irr::f32*)(&TexVar), 1);
     }
 
     if (defaultVertexShader) {
         const irr::core::dimension2du currentRTTSize = services->getVideoDriver()->getCurrentRenderTargetSize();
         const irr::f32 screenX = (irr::f32)currentRTTSize.Width, screenY = (irr::f32)currentRTTSize.Height;
 
-        services->setVertexShaderConstant("screenX", &screenX, 1);
-        services->setVertexShaderConstant("screenY", &screenY, 1);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("screenX"), &screenX, 1);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("screenY"), &screenY, 1);
 
         irr::scene::ISceneManager* smgr = effect->getActiveSceneManager();
         irr::scene::ICameraSceneNode* cam = smgr->getActiveCamera();
@@ -1945,15 +1945,15 @@ inline void ScreenQuadCB::OnSetConstants(irr::video::IMaterialRendererServices* 
                                               smgr->getSceneCollisionManager()->getRayFromScreenCoordinates(
                                                   irr::core::position2di(bRight.X, bRight.Y), cam)};
 
-        services->setVertexShaderConstant("LineStarts0", &sLines[0].start.X, 3);
-        services->setVertexShaderConstant("LineStarts1", &sLines[1].start.X, 3);
-        services->setVertexShaderConstant("LineStarts2", &sLines[2].start.X, 3);
-        services->setVertexShaderConstant("LineStarts3", &sLines[3].start.X, 3);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("LineStarts0"), &sLines[0].start.X, 3);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("LineStarts1"), &sLines[1].start.X, 3);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("LineStarts2"), &sLines[2].start.X, 3);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("LineStarts3"), &sLines[3].start.X, 3);
 
-        services->setVertexShaderConstant("LineEnds0", &sLines[0].end.X, 3);
-        services->setVertexShaderConstant("LineEnds1", &sLines[1].end.X, 3);
-        services->setVertexShaderConstant("LineEnds2", &sLines[2].end.X, 3);
-        services->setVertexShaderConstant("LineEnds3", &sLines[3].end.X, 3);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("LineEnds0"), &sLines[0].end.X, 3);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("LineEnds1"), &sLines[1].end.X, 3);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("LineEnds2"), &sLines[2].end.X, 3);
+        services->setVertexShaderConstant(services->getVertexShaderConstantID("LineEnds3"), &sLines[3].end.X, 3);
     }
 
     if (uniformDescriptors.size()) {
@@ -1963,7 +1963,7 @@ inline void ScreenQuadCB::OnSetConstants(irr::video::IMaterialRendererServices* 
             if (mapIter.getNode()->getValue().fPointer == 0)
                 continue;
 
-            services->setPixelShaderConstant(mapIter.getNode()->getKey().c_str(),
+            services->setPixelShaderConstant(services->getVertexShaderConstantID(mapIter.getNode()->getKey().c_str()),
                                              mapIter.getNode()->getValue().fPointer,
                                              mapIter.getNode()->getValue().paramCount);
         }

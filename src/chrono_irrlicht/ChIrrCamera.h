@@ -145,7 +145,7 @@ class ChApiIrr RTSCamera : public irr::scene::ICameraSceneNode {
     bool isMouseKeyDown(irr::s32 key);
     void animate();
     void updateAnimationState();
-    void updateMatrices();
+    void updateMatrices() override;
     virtual void setUpVector(const irr::core::vector3df& pos) override final {}
 };
 

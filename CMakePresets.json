@@ -25,15 +25,29 @@
 			"hidden": false,
 			"binaryDir": "${sourceDir}/build-linux",
 			"generator": "Ninja",
+		
 			"cacheVariables": {
+		
 				"CMAKE_BUILD_TYPE": "Release",
+		
 				"CMAKE_C_COMPILER": "/opt/llvm-22/bin/clang",
-        "CMAKE_CXX_COMPILER": "/opt/llvm-22/bin/clang++",
-				"CMAKE_CXX_FLAGS": "-Wno-c2y-extensions -Wno-error=c2y-extensions",
-        "CMAKE_C_FLAGS": "-Wno-c2y-extensions -Wno-error=c2y-extensions",
-        "CMAKE_CXX_STANDARD": "17",
+				"CMAKE_CXX_COMPILER": "/opt/llvm-22/bin/clang++",
+
+				"SWIG_EXECUTABLE": "/usr/local/bin/swig",
+
+				"CMAKE_CXX_STANDARD": "17",
+		
+				"CMAKE_CXX_FLAGS": "-Wno-c2y-extensions -Wno-error=c2y-extensions -fopenmp=libiomp5 -march=native",
+				"CMAKE_C_FLAGS": "-Wno-c2y-extensions -Wno-error=c2y-extensions -fopenmp=libiomp5 -march=native",
+
+				"CMAKE_EXE_LINKER_FLAGS": "-L/opt/intel/oneapi/compiler/latest/lib -liomp5",
+				"CMAKE_SHARED_LINKER_FLAGS": "-L/opt/intel/oneapi/compiler/latest/lib -liomp5",
+
+				"CMAKE_INSTALL_PREFIX": "${sourceDir}/chrono-install",
+		
 				"BUILD_TESTING": "ON",
 				"BUILD_BENCHMARKING": "ON",
+		
 				"CH_ENABLE_HDF5": "ON",
 				"CH_ENABLE_MODULE_CSHARP": "OFF",
 				"CH_ENABLE_MODULE_FMI": "OFF",
@@ -47,8 +61,13 @@
 				"CH_ENABLE_MODULE_SYNCHRONO": "ON",
 				"CH_ENABLE_MODULE_VEHICLE": "ON",
 				"CH_ENABLE_MODULE_VSG": "OFF",
+		
+				"IRRLICHT_LIBRARY": "/usr/local/lib/libIrrlicht.so",
+				"IRRLICHT_INCLUDE_DIR": "/usr/local/include/irrlicht",
+		
 				"EIGEN3_INCLUDE_DIR": "$env{HOME}/github/eigen",
 				"THRUST_INCLUDE_DIR": "$env{HOME}/github/thrust",
+
 				"MKL_DIR": "/opt/intel/oneapi/mkl/latest/lib/cmake/mkl"
 			}
 		},
