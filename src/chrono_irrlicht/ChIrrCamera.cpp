@@ -198,7 +198,7 @@ void RTSCamera::OnAnimate(u32 timeMs) {
 }
 
 bool RTSCamera::isInputReceiverEnabled() const {
-    _IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
+    //_IRR_IMPLEMENT_MANAGED_MARSHALLING_BUGFIX;
     return InputReceiverEnabled;
 }
 
@@ -281,7 +281,7 @@ void RTSCamera::recalculateProjectionMatrix() {
 
 void RTSCamera::recalculateViewArea() {
     core::matrix4 mat = Projection * View;
-    ViewArea = SViewFrustum(mat);
+    ViewArea = SViewFrustum(mat, false);
 
     ViewArea.cameraPosition = getAbsolutePosition();
     ViewArea.recalculateBoundingBox();

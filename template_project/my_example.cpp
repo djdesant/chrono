@@ -27,7 +27,10 @@ using namespace chrono::irrlicht;
 
 int main(int argc, char* argv[]) {
     // Set path to Chrono data directory
-    SetChronoDataPath(CHRONO_DATA_DIR);
+
+    const std::string data_path = "C:/Prj/GitHub/chrono/build/data";
+    SetChronoDataPath(std::string(data_path));
+    //SetChronoDataPath(std::string(CHRONO_DATA_DIR));
     
     // Create a Chrono physical system
     ChSystemNSC sys;

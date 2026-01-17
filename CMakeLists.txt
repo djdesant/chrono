@@ -185,6 +185,10 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
     else()
         set(CPACK_SYSTEM_NAME "win64-${CMAKE_SYSTEM_PROCESSOR}")
     endif()
+
+    if(MSVC AND ${MSVC_VERSION} GREATER_EQUAL 1915)
+        add_definitions( "-D_ENABLE_EXTENDED_ALIGNED_STORAGE" )
+    endif()
 endif()
 
 #-----------------------------------------------------------------------------

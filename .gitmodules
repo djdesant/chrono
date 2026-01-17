@@ -10,3 +10,9 @@
 [submodule "src/chrono_thirdparty/fmu-forge"]
 	path = src/chrono_thirdparty/fmu-forge
 	url = https://github.com/projectchrono/fmu-forge.git
+[submodule "irrlicht"]
+	path = irrlicht
+	url = https://github.com/djdesant/irrlicht
+[submodule "blaze"]
+	path = blaze
+	url = https://bitbucket.org/blaze-lib/blaze.git
